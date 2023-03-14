@@ -13,4 +13,10 @@ function sendMessage(event) {
     ws.send(input.value)
     input.value = ''
     event.preventDefault()
-}
+};
+
+var pointCloudSocket = new WebSocket("ws://localhost:8000/api/point_cloud");
+pointCloudSocket.onmessage = (event) => {
+    let payload = JSON.parse(event.data);
+    console.log(payload);
+};
