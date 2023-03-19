@@ -8,6 +8,7 @@ ws.onmessage = function(event) {
     message.appendChild(content)
     messages.appendChild(message)
 };
+
 function sendMessage(event) {
     var input = document.getElementById("messageText")
     ws.send(input.value)
@@ -18,5 +19,8 @@ function sendMessage(event) {
 var pointCloudSocket = new WebSocket("ws://localhost:8000/api/point_cloud");
 pointCloudSocket.onmessage = (event) => {
     let payload = JSON.parse(event.data);
-    console.log(payload);
+    viewer.updatePoints(payload);
 };
+
+let viewer = new Viewer();
+viewer.animate();

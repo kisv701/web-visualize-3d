@@ -1,7 +1,10 @@
 import asyncio
+import time
+import math
 
 from fastapi import FastAPI, WebSocket
 from fastapi.staticfiles import StaticFiles
+from .mock_elements import generate_box
 
 
 app = FastAPI()
@@ -19,16 +22,10 @@ async def websocket_endpoint(websocket: WebSocket):
 async def point_cloud_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
-        mocked_data = {
-            'x': [1, 2, 3, 4],
-            'y': [1, 2, 3, 4],
-            'z': [1, 2, 3, 4],
-            'r': [1, 2, 3, 4],
-            'g': [1, 2, 3, 4],
-            'b': [1, 2, 3, 4],
-        }
+        scale = 2 + math.sin(time.time() * 0.33 * math.pi)
+        mocked_data = generate_box(scale)
         await websocket.send_json(mocked_data)
-        await asyncio.sleep(2)
+        await asyncio.sleep(1/60)
 
 app.mount('/api', web_socket_app)
 app.mount("/", StaticFiles(directory="web_root", html=True), name="web_root")
