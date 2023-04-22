@@ -25,11 +25,10 @@ class Viewer {
         directionalLight.target.position.set(0, 0, 0);
         this.scene.add(directionalLight);
         this.scene.add(directionalLight.target);
-        console.log('ewer initialized.');
+        console.log('Viewer initialized.');
     }
 
     updatePoints(points) {
-
         var pointsObject = this.scene.getObjectByName('points');
         this.scene.remove(pointsObject);
 
@@ -39,14 +38,14 @@ class Viewer {
         for (let i=0; i < points.x.length; i++) {
             vertices.push(points.x[i], points.y[i], points.z[i]);
             colors.push(points.r[i], points.g[i], points.b[i]);
-        } 
+        }
 
         const geometry = new THREE.BufferGeometry();
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
         geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        
+
         const material = new THREE.PointsMaterial({size: 1, vertexColors: true});
-        
+
         this.points = new THREE.Points(geometry, material);
         this.points.name = 'points';
         this.scene.add(this.points);

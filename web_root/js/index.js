@@ -1,5 +1,3 @@
-console.log("Hello from JS");
-
 var ws = new WebSocket("ws://localhost:8000/api/ws");
 ws.onmessage = function(event) {
     var messages = document.getElementById('messages')
@@ -16,6 +14,7 @@ function sendMessage(event) {
     event.preventDefault()
 };
 
+// Subscribe to point cloud streams.
 var pointCloudSocket = new WebSocket("ws://localhost:8000/api/point_cloud");
 pointCloudSocket.onmessage = (event) => {
     let payload = JSON.parse(event.data);
